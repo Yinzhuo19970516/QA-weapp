@@ -1,0 +1,45 @@
+<!--pages/my/my.wxml-->
+<view class="page">
+  <view class="userinfo">
+    <view class="userinfo-avatar">
+      <open-data type="userAvatarUrl"></open-data>
+    </view>
+    <view class="userinfo-nickname">
+      <open-data type="userNickName"></open-data>
+    </view>
+  </view>
+  <view class="weui-cells weui-cells_after-title">
+    <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell__bd">我的积分</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access">200</view>
+    </navigator>
+    <navigator url="../myqa/myqa" open-type="navigate" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell__bd">我的回答</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access">2</view>
+    </navigator>
+    <navigator url="../myqa/myqa" open-type="navigate" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell__bd">我的提问</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access">3</view>
+    </navigator>
+    <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell__bd">我的消息</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access">点击查看</view>
+    </navigator>
+    <navigator url="../myqa/myqa" open-type="navigate" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell__bd">我的收藏</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access">点击查看</view>
+    </navigator>
+  </view>
+  <view class="content">
+    <image src="../../asset/images/xunzhang.png" class="icon"></image>
+    <text class="title">我的勋章</text>
+    <view class="weui-grids">
+      <block wx:for="{{grids}}" wx:key="*this">
+        <view class="weui-grid">
+          <image class="weui-grid__icon" src="../../asset/images/index.png" />
+          <view class="weui-grid__label">Grid</view>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>

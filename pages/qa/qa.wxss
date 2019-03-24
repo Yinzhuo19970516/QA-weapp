@@ -1,0 +1,15 @@
+/* pages/qa/qa.wxss */
+.page{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.page .icon{
+  width:50rpx;
+  height:50rpx;
+  margin:10rpx 20rpx 20rpx 30rpx;
+}
+.page .title{
+  font-weight: 400;
+  padding-top:10rpx;
+}

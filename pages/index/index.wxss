@@ -1,0 +1,97 @@
+/* pages/main/main.wxss */
+.page{
+  width:100%;
+  height:auto;
+  overflow: auto;
+  padding-top:100rpx;
+}
+.weui-search-bar{
+  width:100%;
+  position: fixed;
+  top:0;
+  z-index:10;
+}
+
+.searchbar-result{
+  width:100%;
+  position: fixed;
+  top:90;
+  z-index:10;
+  margin-top: 0;
+  font-size: 14px;
+}
+.searchbar-result:before{
+  display: none;
+}
+.weui-cell{
+  padding: 12px 15px 12px 35px;
+}
+swiper{
+  height: 421.5rpx;
+}
+swiper-item image {
+  width: 100%;
+  height: 100%;
+}
+swiper-item .title{
+  padding-left:10rpx;
+  padding-right:20rpx;
+  color:white;
+  position:absolute;
+  z-index:2;
+  height:80rpx;
+  background:black;
+  bottom:50rpx;
+  left:0;
+  opacity: 0.5;
+  line-height: 80rpx;
+}
+.main{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.main .icon{
+  width:70rpx;
+  height:70rpx;
+  margin:10rpx 20rpx 10rpx 30rpx;
+}
+.main .title{
+  font-weight: 400;
+  padding-top:15rpx;
+}
+.main .list{
+  width: 100%;
+}
+.weui-tab__content{
+  width:100%;
+  padding-top: 60px;
+  text-align: center;
+}
+.page__bd{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.page__bd .icon{
+  width:70rpx;
+  height:70rpx;
+  margin:10rpx 20rpx 0rpx 30rpx;
+}
+.page__bd .title{
+  font-weight: 400;
+  padding-top:15rpx;
+}
+.page__bd .weui-tab{
+  width:100%;
+}
+.page__bd .weui-navbar__slider{
+  width:7em;
+}
+
+.weui-navbar__item.weui-bar__item_on {
+  color:#19b955;
+}
+.weui-navbar__slider{
+  background-color:#19b955;
+}

@@ -1,0 +1,42 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/qa/qa",
+    "pages/my/my",
+    "pages/message/message",
+    "pages/myqa/myqa"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+      "color": "#8a8a8a",
+      "selectedColor": "#19b955",
+      "backgroundColor": "#efeff4",
+      "borderStyle": "white",
+      "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "./asset/images/index.png",
+        "selectedIconPath": "./asset/images/index_focus.png"
+      },
+      {
+        "pagePath": "pages/qa/qa",
+        "text": "问题库",
+        "iconPath": "./asset/images/qa.png",
+        "selectedIconPath": "./asset/images/qa_focus.png"
+      },
+      {
+          "pagePath": "pages/my/my",
+          "text": "我的",
+          "iconPath": "./asset/images/my.png",
+          "selectedIconPath": "./asset/images/my_focus.png"
+      }
+    ]
+  }
+}
