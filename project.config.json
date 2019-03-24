@@ -39,12 +39,12 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 3,
 			"list": [
 				{
-					"id": -1,
+					"id": 0,
 					"name": "my",
-					"pathName": "pages/my/my",
+					"pathName": "pages/myqa/myqa",
 					"query": "",
 					"scene": null
 				},
@@ -52,6 +52,20 @@
 					"id": 1,
 					"name": "qa",
 					"pathName": "pages/qa/qa",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "3",
+					"pathName": "pages/my/my",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "message",
+					"pathName": "pages/message/message",
 					"query": "",
 					"scene": null
 				}

@@ -1,2 +1,28 @@
-<!--pages/message/message.wxml-->
-<text>pages/message/message.wxml</text>
+<view class="page">
+  <view class="page_bd">
+    <image class="icon" src="../../asset/images/message.png"></image>
+    <text class="title">我的消息</text>
+    <view class="content">
+      <view class="message" wx:if="{{message_list.length===0}}">您暂时没有什么消息</view>
+      <block wx:for="{{message_list}}" wx:key="index">
+      </block>
+    </view>
+  </view>
+  <view class="page_bd">
+    <image class="icon" src="../../asset/images/jifen.png"></image>
+    <text class="title">我的积分</text>
+    <block class="jifen-box" wx:for="{{jifen_list}}" wx:key="index">
+      <view class="jifen">{{jifen_list[index]}}</view>
+    </block>
+    <view class="bottom" hidden="{{jifen_list.length<=2}}">
+      <view id="rep_openPrizeList" class="open-list" hidden="{{jifen_list_temp.length>2}}" bindtap="openPrizeList">查看全部
+        <view class="jiantou icon-top-open"></view>
+        <view class="jiantou icon-behind-open"></view>
+      </view>
+      <view class="close-list" hidden="{{jifen_list_temp.length<=2}}" bindtap="closePrizeList">收起
+        <view class="jiantou icon-top-close"></view>
+        <view class="jiantou icon-behind-close"></view>
+      </view>
+    </view>
+  </view>
+</view>

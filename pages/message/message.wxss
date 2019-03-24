@@ -1,1 +1,81 @@
-/* pages/message/message.wxss */
+.page_bd{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.page_bd .icon{
+  width:70rpx;
+  height:70rpx;
+  margin:10rpx 20rpx 0rpx 30rpx;
+}
+.page_bd .title{
+  font-weight: 400;
+  padding-top:15rpx;
+}
+.page_bd .content{
+  width:100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+.page_bd .content .message{
+  margin:20px auto;
+}
+.jifen-box {
+  display: flex;
+  
+}
+.jifen {
+  width:610rpx;
+  height:400rpx;
+  display: flex;
+  margin:50rpx auto 0;
+  background: white;
+  box-shadow:0rpx 0rpx 15rpx 0rpx rgba(25,185,85,0.75) inset;
+  border-radius: 15rpx;
+}
+.open-list,.close-list{
+  margin:40rpx auto;
+  color:rgb(74,28,1);
+  position:relative;
+  text-align:center;
+}
+.jiantou{
+  display:inline-block;
+  width:13rpx;
+  height:13rpx;
+  border-style: solid none none solid;
+  border-width:2rpx;
+  margin-left:10rpx;
+}
+.bottom{
+  display: flex;
+  margin:auto;
+  flex-direction: column;
+  width: 100%;
+}
+.icon-top-open{
+  transform:rotate(225deg);
+  position:absolute;
+  top:10rpx;
+  left:150rpx;
+}
+.icon-behind-open{
+  transform:rotate(225deg);
+  position:absolute;
+  top:20rpx;
+  left:150rpx;
+}
+.icon-top-close{
+  transform:rotate(45deg);
+  margin-bottom:5rpx;
+  position:absolute;
+  top:20rpx;
+  left:80rpx;
+}
+.icon-behind-close{
+  transform:rotate(45deg);
+  position:absolute;
+  top:30rpx;
+  left:80rpx;
+}

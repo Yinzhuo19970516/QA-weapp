@@ -5,7 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    jifen_list:[123,123,3333],
+    jifen_list_temp: [123, 123,123]
   },
 
   /**
