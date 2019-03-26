@@ -39,7 +39,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 3,
+			"current": 5,
 			"list": [
 				{
 					"id": 0,
@@ -56,16 +56,30 @@
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "3",
-					"pathName": "pages/my/my",
+					"id": 2,
+					"name": "qa",
+					"pathName": "pages/qa/qa",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "details",
+					"pathName": "pages/detail/detail",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "message",
-					"pathName": "pages/message/message",
+					"name": "121312312321",
+					"pathName": "pages/detail/detail",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "提问页面",
+					"pathName": "pages/question/question",
 					"query": "",
 					"scene": null
 				}

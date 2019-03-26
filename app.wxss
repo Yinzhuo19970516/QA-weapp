@@ -1,5 +1,6 @@
 /**app.wxss**/
 @import "weui.wxss";
+
 .container {
   height: 100%;
   display: flex;
@@ -8,22 +9,26 @@
   justify-content: space-between;
   padding: 200rpx 0;
   box-sizing: border-box;
-} 
-.animals{
+}
+
+.animals {
   display: block;
-  height: 160rpx;
-  width: 100rpx;
+  height: 180rpx;
+  width: 120rpx;
   background-image: url(http://129.204.118.251:1234/bishe/animals.png);
   /* background-size: cover; */
   background-repeat: none;
   cursor: pointer;
   position: fixed;
-  right:0;
-  top:800rpx;
+  right: 0;
+  top: 800rpx;
+  z-index: 1000;
 }
-.animals_hover{
-  background-position: -20px 100px ;
+
+.animals_hover {
+  background-position: -14px 95px;
 }
-.animals_normal{
-  background-position: -20px -135px;
+
+.animals_normal {
+  background-position: -14px -140px;
 }

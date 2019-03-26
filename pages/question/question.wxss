@@ -1,0 +1,20 @@
+/* pages/question/question.wxss */
+.page{
+  padding:20rpx;
+}
+textarea{
+  width:95%;
+  display: flex;
+  padding:20rpx;
+  margin:30rpx auto 20rpx;
+  background: white;
+  box-shadow:0rpx 0rpx 15rpx 0rpx rgba(25,185,85,0.75) inset;
+  border-radius: 15rpx;
+  flex-direction: column;
+}
+.weui-input{
+  margin-left:30rpx;
+}
+.weui-select{
+  border-right:1px solid white;
+}

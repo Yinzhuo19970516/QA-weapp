@@ -1,17 +1,26 @@
 {
   "pages":[
+    "pages/loading/loading",
     "pages/index/index",
     "pages/logs/logs",
     "pages/qa/qa",
     "pages/my/my",
     "pages/message/message",
-    "pages/myqa/myqa"
+    "pages/myqa/myqa",
+    "pages/detail/detail",
+    "pages/question/question"
   ],
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "问答系统",
+    "navigationBarTitleText": "问答--你问大家答",
     "navigationBarTextStyle":"black"
+  },
+  "plugins": {
+    "wxparserPlugin": {
+      "version": "0.2.1",
+      "provider": "wx9d4d4ffa781ff3ac"
+    }
   },
   "tabBar": {
       "color": "#8a8a8a",

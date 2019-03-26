@@ -1,67 +1,35 @@
 // pages/message/message.js
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
+    message_list:[123,123,123],
+    message_list_temp:[],
     jifen_list:[123,123,3333],
-    jifen_list_temp: [123, 123,123]
+    jifen_list_temp: []
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
+  onLoad(){
+    this.setData({
+      message_list_temp: this.data.message_list.slice(0, 2),
+      jifen_list_temp: this.data.jifen_list.slice(0, 2),
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  openMessageList:function(){
+    this.setData({
+      message_list_temp:this.data.message_list
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  openJifenList:function(){
+    this.setData({
+      jifen_list_temp:this.data.jifen_list
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  closeMessageList: function () {
+    this.setData({
+      message_list_temp: this.data.message_list.slice(0, 2)
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  closeJifenList: function () {
+    this.setData({
+      jifen_list_temp: this.data.jifen_list.slice(0, 2)
+    })
   }
 })

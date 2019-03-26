@@ -27,7 +27,6 @@
 }
 .jifen {
   width:610rpx;
-  height:400rpx;
   display: flex;
   margin:50rpx auto 0;
   background: white;

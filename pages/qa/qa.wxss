@@ -1,15 +1,71 @@
-/* pages/qa/qa.wxss */
-.page{
+page {
+  background: #fff;
+}
+
+/*总体主盒子*/
+
+.container {
+  position: relative;
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
+  height: 100%;
+  background-color: #fff;
+  color: black;
 }
-.page .icon{
-  width:50rpx;
-  height:50rpx;
-  margin:10rpx 20rpx 20rpx 30rpx;
+
+/*左侧栏主盒子*/
+
+.nav_left {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 24.5%;
+  height: 100%;
+  background-color: #fff;
+  opacity: 0.5;
+  
 }
-.page .title{
-  font-weight: 400;
-  padding-top:10rpx;
+/*左侧栏list的item*/
+
+.nav_left .nav_left_items {
+  /*每个高30px*/
+  height: 40px;
+  /*垂直居中*/
+  line-height: 40px;
+  /*再设上下padding增加高度，总高42px*/
+  padding: 6px 0;
+  /*只设下边线*/
+  
+  /*文字14px*/
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
 }
+
+/*左侧栏list的item被选中时*/
+
+.nav_left .nav_left_items.active {
+  /*背景色变成白色*/
+  background:  #19b955;
+  color: white;
+}
+
+/*右侧栏主盒子*/
+
+.nav_right {
+  /*右侧盒子使用了绝对定位*/
+  position: absolute;
+  top: 0;
+  right: 0;
+  flex: 1;
+  /*宽度75%，高度占满，并使用百分比布局*/
+  width: 74.5%;
+  padding: 10px;
+  box-sizing: border-box;
+  background: #fff;
+  border-left:1px solid #19b955;
+}
+.warp{
+  font-size:12px;
+  color:#8a8a8a;
+}
+/*右侧栏list的item*/

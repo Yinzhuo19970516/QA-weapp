@@ -1,0 +1,37 @@
+<!--pages/question/question.wxml-->
+<view class='page'>
+  <form bindsubmit="bindFormSubmit">
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">悬赏积分</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" placeholder="请输入整数积分" />
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">悬赏人数</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" placeholder="请输入人数" />
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">选择分类</view>
+        </view>
+        <view class="weui-cell__bd">
+
+          <picker bindchange="bindAccountChange" value="{{accountIndex}}" range="{{accounts}}">
+
+            <view class="weui-select">{{accounts[accountIndex]}}</view>
+          </picker>
+        </view>
+      </view>
+    </view>
+    <textarea class="myanswer_input" placeholder="在这里写你的问题" name="textarea" />
+    <button form-type="submit" class="weui-btn" type="primary">提交</button>
+  </form>
+</view>

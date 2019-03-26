@@ -9,11 +9,11 @@
     </view>
   </view>
   <view class="weui-cells weui-cells_after-title">
-    <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+    <navigator url="../message/message" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
       <view class="weui-cell__bd">我的积分</view>
       <view class="weui-cell__ft weui-cell__ft_in-access"></view>
     </navigator>
-    <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+    <navigator url="../message/message" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
       <view class="weui-cell__bd">我的消息</view>
       <view class="weui-cell__ft weui-cell__ft_in-access"></view>
     </navigator>
@@ -21,7 +21,7 @@
       <view class="weui-cell__bd">我的回答</view>
       <view class="weui-cell__ft weui-cell__ft_in-access">点击查看</view>
     </navigator>
-    <navigator url="../myqa/myqa？flag=1" open-type="navigate" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+    <navigator url="../myqa/myqa?flag=1" open-type="navigate" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
       <view class="weui-cell__bd">我的提问</view>
       <view class="weui-cell__ft weui-cell__ft_in-access">点击查看</view>
     </navigator>
