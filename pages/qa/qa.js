@@ -1,5 +1,6 @@
 Page({
   data: {
+    box_flag:false,
     animals_flag: false,
     cateItems: [{
       cate_id: 1,
@@ -58,6 +59,11 @@ Page({
     var animals_flag = this.data.animals_flag;
     this.setData({
       animals_flag: !animals_flag
+    })
+  },
+  jumpToQusetion: function () {
+    wx.navigateTo({
+      url: '/pages/question/question',
     })
   }
 })

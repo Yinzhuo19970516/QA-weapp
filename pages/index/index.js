@@ -38,7 +38,7 @@ Page({
     activeIndex: 0,
     sliderOffset: 0,
     sliderLeft: 0,
-    animals_flag: false,
+    animals_flag: false
   },
   onLoad: function () {
     var that = this;
@@ -102,6 +102,11 @@ Page({
     var animals_flag = this.data.animals_flag;
     this.setData({
       animals_flag: !animals_flag
+    })
+  },
+  jumpToQusetion:function(){
+    wx.navigateTo({
+      url: '/pages/question/question',
     })
   }
 });

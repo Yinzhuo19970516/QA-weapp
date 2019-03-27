@@ -32,3 +32,23 @@
 .animals_normal {
   background-position: -14px -140px;
 }
+.question_little_box{
+  position: fixed;
+  top:770rpx;
+  right:90rpx;
+  background: rgba(25,185,85,0.75);
+  color: white;
+  border-radius: 50%;
+  width:50rpx;
+  height:40rpx;
+}
+.question_box{
+  background: rgba(25,185,85,0.75);
+  position: fixed;
+  top:700rpx;
+  right:120rpx;
+  color:white;
+  border-radius: 60rpx;
+  padding:15rpx;
+  font-size:16px;
+}

@@ -29,4 +29,8 @@
     <view class="nodata_text" wx:else>该分类暂无数据</view>
   </view>
   <view class="animals {{animals_flag?'animals_hover':'animals_normal'}}" bindtap='exchange_animals'></view>
+  <view class="question_little_box" wx:if="{{animals_flag}}"></view>
+  <view class="question_box" wx:if="{{animals_flag}}"  bindtap='jumpToQusetion'>
+    我要提问
+  </view>
 </view>
