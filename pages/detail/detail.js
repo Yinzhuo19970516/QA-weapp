@@ -1,57 +1,126 @@
 // pages/detail/detail.js
+const app = getApp()
+const db = wx.cloud.database()
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-    richText: '<h1>Hello world!</h1>',
-    options: '',
-    question: {
-      child_id: 1,
-      title: "机械硬盘数据被删大约一年还能恢复吗",
-      time: '20180325',
-      answer_acount: '5',
-      jifen_acount: "10",
-      join_acount: '10',
-      nickname: '虎妞先生',
-      avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJSEM2Z8wJOIEcTvVCpNvEk6GwJXdHlv8Sx4qkUUMt8lYruCOC1r54FnvgOiaa62iaPhJWNULB30WBA/132",
-      belong: '电脑硬件',
-      des: '上一年差不多5月份去外地，去之前侄子把我电脑里存的照片和电影删了，当时忙着准备东西也没时间跟他计较，怕他还在电脑上瞎弄就把电脑全拆了装包装里放舅舅家了。现在回家了觉得训侄子一顿也没意思了，还是赶紧恢复数据要紧，想请教各位大神，差不多隔了一年的被删数据还能恢复吗？那时被删之后就放包装里了也没读写过',
-      ishaveanswer: true,
-      answer: [
-      {
-        answer_id: 1,
-        answer_nickname: "虎妞大大",
-        answer_avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJSEM2Z8wJOIEcTvVCpNvEk6GwJXdHlv8Sx4qkUUMt8lYruCOC1r54FnvgOiaa62iaPhJWNULB30WBA/132",
-        content: "应该是可以的只要没重新覆盖就没问题应该",
-        time: "20180908"
-      }, 
-      {
-        answer_id: 2,
-        answer_nickname: "虎妞大大",
-        answer_avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJSEM2Z8wJOIEcTvVCpNvEk6GwJXdHlv8Sx4qkUUMt8lYruCOC1r54FnvgOiaa62iaPhJWNULB30WBA/132",
-        content: "应该是可以的只要没重新覆盖就没问题应该",
-        time: "20180908"
-      }]
-    }
+    myanswer_flag: true,
+    question_id: '',
+    question: {},
+    answer: {},
+    answer_temp: {},
+    button_name: true,
+    id: '',
+    button_flag:[]
   },
   bindFormSubmit(e) {
-    console.log(e.detail.value.textarea)
+    this.setData({
+      textarea:""
+    })
+    wx.showLoading({
+      title: '提交中'
+    })
+    db.collection('answer').where({
+      question_id: this.data.question_id,
+      _openid: app.globalData.openid
+    })
+      .get({
+        success: res => {
+          if(res.data.length == 0){
+            db.collection('answer').add({
+              data: {
+                answer_avatar: app.globalData.userInfo.avatarUrl,
+                answer_content: e.detail.value.textarea,
+                answer_nickname: app.globalData.userInfo.nickName,
+                question_id: this.data.question_id,
+                answer_time: "2019/3/31"
+              },
+              success: res => {
+                wx.hideLoading()
+                wx.showToast({
+                  title: '提交成功',
+                })
+              },
+              fail: err => {
+                wx.hideLoading()
+                wx.showToast({
+                  title: '提交失败',
+                })
+              }
+            })  
+          }else{
+            wx.hideLoading()
+            wx.showToast({
+              icon:"fail",
+              title: '您已经回答过了'
+            })
+          }
+        },
+        fail(err) {
+
+        }
+      })
   },
-  jumpToQuestion(){
+  jumpToQuestion() {
     wx.navigateTo({
       url: '/pages/question/question'
+    })
+  },
+  view_less(e) {
+    var index = e.target.dataset.bindex;
+    this.data.button_flag[index] = false;
+    this.setData({
+      button_flag: this.data.button_flag
+    })
+  },
+  view_more(e) {
+    var index = e.target.dataset.bindex;
+    this.data.button_flag[index] = true;
+    this.setData({
+      button_flag:this.data.button_flag
     })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    this.setData({
-      options: options
-    })
     console.log(options)
+    this.setData({
+      question_id: options.question_id
+    })
+    this.getQuestion()
+
+  },
+  getQuestion() {
+    db.collection('question').where({
+      _id: this.data.question_id
+    }).get({
+      success: res => {
+        this.setData({
+          question: res.data[0]
+        })
+        db.collection("answer").where({
+          question_id: this.data.question_id
+        }).get({
+          success: res => {
+            this.setData({
+              answer: res.data
+            })
+          },
+          fail: err => {
+            wx.showToast({
+              icon: 'none',
+              title: '查询记录失败'
+            })
+          }
+        })
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+      }
+    })
   },
 
   /**
@@ -65,6 +134,21 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
+    db.collection("answer").where({
+      question_id: this.data.question_id
+    }).get({
+      success: res => {
+        this.setData({
+          answer: res.data
+        })
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+      }
+    })
 
   },
 
@@ -86,20 +170,65 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
-
+    
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-
+    db.collection("answer").where({
+      question_id: this.data.question_id
+    }).get({
+      success: res => {
+        this.setData({
+          answer: res.data
+        })
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+      }
+    })
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
-
-  }
+  jumpToIndex(){
+    wx.switchTab({
+      url: '../index/index',
+    })
+  },
+  onShareAppMessage:(res)=> {
+    var path = 'pages/detail/detail?question_id=' + this.data.question_id;
+    return {
+      title: '问答-你问大家答',
+      path: path,
+      success: function (shareTickets) {
+        console.info(shareTickets + '成功');
+        // 转发成功
+      },
+      fail: function (res) {
+        console.log(res + '失败');
+        // 转发失败
+      },
+      complete: function (res) {
+        // 不管成功失败都会执行
+      }
+    }
+  },
+  exchange_animals: function () {
+    var animals_flag = this.data.animals_flag;
+    this.setData({
+      animals_flag: !animals_flag
+    })
+  },
+  jumpToQusetion: function () {
+    wx.navigateTo({
+      url: '/pages/question/question',
+    })
+  }  
 })

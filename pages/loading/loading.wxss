@@ -10,8 +10,8 @@
   display: block;
   height: 190rpx;
   width: 145rpx;
-  background-image: url(http://129.204.118.251:1234/bishe/animals.png);
-  /* background-size: cover; */
+  background-image: url(http://p2.qhimg.com/t01d5acf2bde5eb2bb7.png);
+  background-size: auto;
   background-repeat: none;
   cursor: pointer;
 }

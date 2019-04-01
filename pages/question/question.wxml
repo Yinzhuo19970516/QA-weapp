@@ -7,8 +7,7 @@
           <view class="weui-label">悬赏积分</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" placeholder="请输入整数积分" type="number" name="jifen_account"
-          bindinput='jifen_account' />
+          <input class="weui-input" placeholder="请输入整数积分" type="number" name="jifen_account" />
         </view>
       </view>
       <view class="weui-cell weui-cell_input">
@@ -16,7 +15,7 @@
           <view class="weui-label">悬赏人数</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" placeholder="请输入人数" type="number" name="people_account" bindinput='account' />
+          <input class="weui-input" placeholder="请输入人数(上限10)" type="number" name="people_account" />
         </view>
       </view>
       <view class="weui-cell weui-cell_input">

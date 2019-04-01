@@ -69,3 +69,6 @@ page {
   color:#8a8a8a;
 }
 /*右侧栏list的item*/
+.nav_right_items{
+  margin-bottom:20px;
+}

@@ -1,49 +1,43 @@
+const app = getApp()
+const db = wx.cloud.database()
 Page({
   data: {
+    sort:[],
     box_flag:false,
     animals_flag: false,
-    cateItems: [{
-      cate_id: 1,
-      cate_name: "电脑网络",
-      ishaveChild: true,
-      children: [{
-        child_id: 1,
-        title: "机械硬盘数据被删大约一年还能恢复吗",
-        time: '20180325',
-        answer_acount: '5',
-        jifen_acount: "10",
-        join_acount: '10',
-      },
-        {
-          child_id: 1,
-          title: "机械硬盘数据被删大约一年还能恢复吗",
-          time: '20180325',
-          answer_acount: '5',
-          jifen_acount: "10",
-          join_acount: '10',
-        }]
-      },
-    {
-      cate_id: 2,
-      cate_name: "体育运动",
-      ishaveChild: false
-    },
-    {
-      cate_id: 3,
-      cate_name: "生活健康",
-      ishaveChild: false
-    },
-    {
-      cate_id: 4,
-      cate_name: "手机数码",
-      ishaveChild: false,
-      children: []
-    }
-    ],
     curNav: 1,
-    curIndex: 0
+    curIndex: 0,
+    question:""
   },
-
+  onLoad:function(){
+    db.collection('sort').get({
+      success:res=>{
+        console.log(res.data)
+        this.setData({
+          sort:res.data
+        })
+        this.getQuestion()
+      },
+      fail:err=>{
+        console.log(err)
+      }
+    })
+  },
+  getQuestion(){
+    var index = this.data.curIndex;
+    db.collection('question').where({
+      question_sort:this.data.sort[index].sort_name
+    }).get({
+      success:res=>{
+        console.log(res)
+        this.setData({
+          question:res.data
+        })
+      },fail:err=>{
+        console.log(err)
+      }
+    })
+  },
   //事件处理函数  
   switchRightTab: function (e) {
     // 获取item项的id，和数组的下标值  
@@ -54,7 +48,17 @@ Page({
       curNav: id,
       curIndex: index
     })
+    wx.showLoading({
+      title: '加载中',
+      icon:"loading"
+    })
+    this.getQuestion();
+    wx.hideLoading()
   },
+
+
+
+
   exchange_animals: function () {
     var animals_flag = this.data.animals_flag;
     this.setData({

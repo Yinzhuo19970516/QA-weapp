@@ -91,3 +91,12 @@ swiper-item .title{
 .weui-navbar__slider{
   background-color:#19b955;
 }
+.question-content{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom:40rpx;
+}
+.view_more{
+  margin-right:40rpx;
+}

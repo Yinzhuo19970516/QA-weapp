@@ -1,46 +1,59 @@
 <!--pages/detail/detail.wxml-->
 <!-- <web-view src="https://yz.lynskylate.com?options={{options}}"></web-view> -->
 <view class="page">
-  <view class="title">{{question.title}}</view>
+  <view class="title">{{question.question_title}}</view>
   <view class="info-box">
     <view>
-      <view class="touxiang" style="background:url({{question.avatarUrl}});background-size:contain;"></view>
-      <view class="questioner">{{question.nickname}}</view>
+      <image class="touxiang" src="{{question.question_avatar}}"></image>
+      <view class="questioner">{{question.question_nickname}}</view>
     </view>
     <view>
-      <view class="belong">分类:{{question.belong}}</view>
-      <view class="time">发布时间:{{question.time}}</view>
+      <view class="belong">分类: {{question.question_sort}}</view>
+      <view class="time">发布时间: {{question.question_time}}</view>
     </view>
     <view>
-      <view class="jifen">悬赏积分:{{question.jifen_acount}}</view>
-      <view class="answer">已有回答/可参与人数:{{question.answer_acount}}/{{question.join_acount}}</view>
+      <view class="jifen">悬赏积分: {{question.question_integral}}</view>
+      <view class="answer">已有回答/可参与人数: {{question.question_answer_account}}/{{question.question_join_account}}</view>
     </view>
   </view>
   <view class="desc">
-    {{question.des}}
+    {{question.question_description}}
   </view>
   <view class="btn">
-    <button  type="primary">邀请回答</button>
-    <button type="primary" bindtap="jumpToQuestion">我要提问</button>
+    <button type="primary" open-type="share" bindtap='onShareAppMessage()'>邀请回答</button>
+    <button type="primary" bindtap='jumpToIndex'>返回首页</button>
+
   </view>
-  
+
   <view class="myanswer">
     <form bindsubmit="bindFormSubmit">
-      <textarea class="myanswer_input" placeholder="在这里写你的回答" name="textarea" />
+      <textarea class="myanswer_input" placeholder="在这里写你的回答" name="textarea"
+      value="{{textarea}}" />
       <button form-type="submit" class="weui-btn" type="primary">提交</button>
     </form>
   </view>
-  <view>全部回答（2）</view>
-  <block wx:for="{{question.answer}}" wx:key="index">
+  <view class="title">全部回答</view>
+  <block wx:for="{{answer}}" wx:key="index">
     <view class="answer_box">
-      <view class="content">{{question.answer[index].content}}</view>
+      <view class="content" wx:if="{{!button_flag[index]}}"><wxparser rich-text="{{item.answer_content_simple}}" /></view>
+      <view class="content" wx:if="{{button_flag[index]}}"><wxparser rich-text="{{item.answer_content}}" /></view>
       <view class="answer_info_box">
-        <view class="touxiang" style="background:url({{question.answer[index].answer_avatarUrl}});background-size:contain;"></view>
-        <view class="name">
-          <text class="questioner">{{question.answer[index].answer_nickname}}</text>
-          <text>回答时间:{{question.answer[index].time}}</text>
+        <view class="userinfo">
+          <image wx:if="{{item.answer_avatar}}"class="touxiang" src="{{item.answer_avatar}}"></image>
+          <view class="questioner">{{item.answer_nickname}}</view>
         </view>
+        <view>
+        <view>采纳率</view>
+        <view>回答时间:{{item.answer_time}}</view>
+        </view>
+        <button type="primary" wx:if="{{!button_flag[index]}}" class="view_more" bindtap="view_more" data-bindex="{{index}}">查看全部</button>
+        <button type="primary" wx:if="{{button_flag[index]}}" class="view_more" bindtap="view_less" data-bindex="{{index}}">收起</button>
       </view>
     </view>
   </block>
+  <view class="animals {{animals_flag?'animals_hover':'animals_normal'}}" bindtap='exchange_animals'></view>
+  <view class="question_little_box" wx:if="{{animals_flag}}"></view>
+  <view class="question_box" wx:if="{{animals_flag}}" bindtap='jumpToQusetion'>
+    我要提问
+  </view>
 </view>

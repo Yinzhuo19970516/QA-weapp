@@ -1,11 +1,9 @@
 // pages/question/question.js
+const app = getApp()
+const db = wx.cloud.database()
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-    accounts: ["微信号", "QQ", "Email"],
+    
     accountIndex: -1,
     jifen_account:'',
     people_acount:'',
@@ -15,33 +13,6 @@ Page({
     this.setData({
       accountIndex: e.detail.value
     })
-  },
-  jifen_account:function(e){
-    if (/^\+?[1-9][0-9]*$/.test(e.detail.value)) {
-      if (e.detail.value<100){
-          return;
-      }else{
-        wx.showModal({
-          content: '请输入整数积分',
-          showCancel: false,
-          success: function (res) {
-            // if (res.confirm) {
-            //   console.log('用户点击确定')
-            // }
-          }
-        });
-      }
-    }else{
-      wx.showModal({
-        content: '请输入整数积分',
-        showCancel: false,
-        success: function (res) {
-          // if (res.confirm) {
-          //   console.log('用户点击确定')
-          // }
-        }
-      });
-    }
   },
   bindFormSubmit:function(e){
     var people_account = e.detail.value.people_account;
@@ -57,7 +28,7 @@ Page({
           // }
         }
       });
-    } else if (!(/^\+?[1-9][0-9]*$/.test(jifen_account))){
+    }else if (!(/^\+?[1-9][0-9]*$/.test(jifen_account))){
       wx.showModal({
         content: '请输入整数积分',
         showCancel: false,
@@ -67,7 +38,7 @@ Page({
           // }
         }
       });
-    } else if (!(/^\+?[1-9][0-9]*$/.test(people_account))){
+    }else if (!(/^\+?[1-9][0-9]*$/.test(people_account))){
       wx.showModal({
         content: '请输入整数人数',
         showCancel: false,
@@ -97,31 +68,59 @@ Page({
           // }
         }
       });
-    }
-    wx.showModal({
-      title: '发布成功',
-      content: '您的问题已经发布成，现在可以去我的回答页面查看，邀请好友一起瓜分悬赏',
-      confirmText: "立即查看",
-      cancelText: "返回首页",
-      success: function (res) {
-        console.log(res);
-        if (res.confirm) {
-          wx.navigateTo({
-            url: '/pages/myqa/myqa',
-          })
-        } else {
-          wx.switchTab({
-            url: '/pages/index/index',
-          })
+    }else{
+      db.collection('question').add({
+        data:{
+          question_nickname: app.globalData.userInfo.nickname,
+          question_avatar: app.globalData.userInfo.avatarUrl,
+          question_integral: jifen_account,
+          question_join_account: people_account,
+          question_sort: this.data.accounts[this.data.accountIndex],
+          question_time:"2019/4/1",
+          question_title: question_content
+        },
+        success:res=>{
+          console.log(res)
+          wx.showModal({
+            title: '发布成功',
+            content: '您的问题已经发布成，现在可以去我的回答页面查看，邀请好友一起瓜分悬赏',
+            confirmText: "立即查看",
+            cancelText: "返回首页",
+            success: function (res) {
+              console.log(res);
+              if (res.confirm) {
+                wx.navigateTo({
+                  url: '/pages/myqa/myqa?flag=1',
+                })
+              } else {
+                wx.switchTab({
+                  url: '/pages/index/index',
+                })
+              }
+            }
+          });
+        },
+        fail:err=>{
+          console.log(err)
         }
-      }
-    });
+
+      })
+    
+    }
+    
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    db.collection('sort_question').get({
+      success:res=>{
+        console.log(res)
+        this.setData({
+          accounts: res.data[0].sort_name
+        })
+      }
+    })
   },
 
   /**

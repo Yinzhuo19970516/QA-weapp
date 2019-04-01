@@ -2,5 +2,6 @@
   "usingComponents": {
     "wxparser": "plugin://wxparserPlugin/wxparser"
   },
-  "navigationBarTitleText": "问题详情"
+  "navigationBarTitleText": "问题详情",
+  "onReachBottomDistance":100
 }
