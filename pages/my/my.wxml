@@ -30,7 +30,7 @@
       <view class="weui-cell__ft weui-cell__ft_in-access">点击查看</view>
     </navigator>
   </view>
-  <view class="content">
+  <!-- <view class="content">
     <image src="../../asset/images/xunzhang.png" class="icon"></image>
     <text class="title">我的勋章</text>
     <view class="weui-grids">
@@ -41,5 +41,5 @@
         </view>
       </block>
     </view>
-  </view>
+  </view> -->
 </view>

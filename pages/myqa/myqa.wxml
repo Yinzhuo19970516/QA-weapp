@@ -14,8 +14,9 @@
         <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
           <block wx:for="{{answer}}" wx:key="index">
             <view class="my_question_box">
-              <view wx:if="{{item.answer_content_simple}}" class="my_question_title">{{item.answer_content_simple}}</view>
-              <view wx:if="{{!item.answer_content_simple}}" class="my_question_title">{{item.answer_content}}</view>
+              <view class="my_question_title">Q:{{item.question_title}}</view>
+              <view wx:if="{{item.answer_content_simple}}" class="my_question_title">A:{{item.answer_content_simple}}</view>
+              <view wx:if="{{!item.answer_content_simple}}" class="my_question_title">A:{{item.answer_content}}</view>
               <view class="answer_message_box">
                 <view>回答时间：{{item.answer_time}}</view>
                 <navigator url="../detail/detail?question_id={{item.question_id}}">
@@ -35,8 +36,8 @@
                   <view>提问时间：{{question[index].question_time}}</view>
                   <view>悬赏积分：{{question[index].question_integral}}</view>
                 </view>
-                <button type="primary">编辑</button>
-                <button type="primary">删除</button>
+                <button type="primary" bindtap='edit' data-bindex="{{index}}">修改</button>
+                <button type="primary"  bindtap='remove' data-bindex="{{index}}">删除</button>
               </view>
             </view>
           </block>

@@ -12,7 +12,6 @@ Page({
   onLoad:function(){
     db.collection('sort').get({
       success:res=>{
-        console.log(res.data)
         this.setData({
           sort:res.data
         })
@@ -29,7 +28,6 @@ Page({
       question_sort:this.data.sort[index].sort_name
     }).get({
       success:res=>{
-        console.log(res)
         this.setData({
           question:res.data
         })

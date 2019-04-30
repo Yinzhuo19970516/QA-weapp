@@ -5,20 +5,27 @@ Page({
   data: {
     myanswer_flag: true,
     question_id: '',
+    question_title:'',
     question: {},
     answer: {},
     answer_temp: {},
     button_name: true,
     id: '',
-    button_flag:[]
+    button_flag:[],
+    isShowLoading:false
   },
   bindFormSubmit(e) {
     this.setData({
       textarea:""
     })
-    wx.showLoading({
-      title: '提交中'
-    })
+    if (e.detail.value.textarea==''){
+      wx.showModal({
+        content: '请填写完整信息',
+        showCancel: false,
+        success: function (res) {
+        }
+      });
+    }else {
     db.collection('answer').where({
       question_id: this.data.question_id,
       _openid: app.globalData.openid
@@ -26,32 +33,32 @@ Page({
       .get({
         success: res => {
           if(res.data.length == 0){
+            var that =this;
             db.collection('answer').add({
               data: {
                 answer_avatar: app.globalData.userInfo.avatarUrl,
                 answer_content: e.detail.value.textarea,
                 answer_nickname: app.globalData.userInfo.nickName,
                 question_id: this.data.question_id,
-                answer_time: "2019/3/31"
+                answer_time: "2019/3/31",
+                question_title:this.data.question_title
               },
               success: res => {
-                wx.hideLoading()
                 wx.showToast({
                   title: '提交成功',
                 })
+                that.getAnswer();
               },
               fail: err => {
-                wx.hideLoading()
                 wx.showToast({
                   title: '提交失败',
                 })
               }
             })  
           }else{
-            wx.hideLoading()
             wx.showToast({
-              icon:"fail",
-              title: '您已经回答过了'
+              icon:"none",
+              title: '您已经回答过这个问题了嗷'
             })
           }
         },
@@ -59,6 +66,7 @@ Page({
 
         }
       })
+    }  
   },
   jumpToQuestion() {
     wx.navigateTo({
@@ -83,11 +91,24 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    console.log(options)
     this.setData({
-      question_id: options.question_id
+      question_id: options.question_id,
+      question_title:options.question_title
     })
     this.getQuestion()
+    wx.getSetting({
+      success: res => {
+        if (!res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+          this.setData({
+            isShowLoading: true
+          })
+          
+        } else {
+         
+        }
+      }
+    })
 
   },
   getQuestion() {
@@ -95,23 +116,57 @@ Page({
       _id: this.data.question_id
     }).get({
       success: res => {
-        this.setData({
-          question: res.data[0]
+        if(res.data.length==0){
+          wx.showModal({
+            title: '查看失败',
+            content: '您回答的问题已经被提问者删除，无法查看，点击确定返回我的回答',
+            confirmText: "确定",
+            showCancel:false,
+            success: function (res) {
+              if (res.confirm) {
+                wx.redirectTo({
+                  url: '/pages/myqa/myqa?flag=0',
+                })
+              } 
+            },
+          })
+        } else {
+          this.setData({
+            question: res.data[0]
+          })
+          db.collection("answer").where({
+            question_id: this.data.question_id
+          }).get({
+            success: res => {
+              this.setData({
+                answer: res.data
+              })
+            },
+            fail: err => {
+              wx.showToast({
+                icon: 'none',
+                title: '查询记录失败'
+              })
+            }
+          })}
+       
+        
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
         })
-        db.collection("answer").where({
-          question_id: this.data.question_id
-        }).get({
-          success: res => {
-            this.setData({
-              answer: res.data
-            })
-          },
-          fail: err => {
-            wx.showToast({
-              icon: 'none',
-              title: '查询记录失败'
-            })
-          }
+      }
+    })
+  },
+  getAnswer(){
+    db.collection("answer").where({
+      question_id: this.data.question_id
+    }).get({
+      success: res => {
+        this.setData({
+          answer: res.data
         })
       },
       fail: err => {
@@ -134,22 +189,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    db.collection("answer").where({
-      question_id: this.data.question_id
-    }).get({
-      success: res => {
-        this.setData({
-          answer: res.data
-        })
-      },
-      fail: err => {
-        wx.showToast({
-          icon: 'none',
-          title: '查询记录失败'
-        })
-      }
-    })
-
+    this.getAnswer()
   },
 
   /**
@@ -230,5 +270,27 @@ Page({
     wx.navigateTo({
       url: '/pages/question/question',
     })
-  }  
+  },
+  getUserInfo: function (e) {
+    // 将获取的用户信息赋值给全局 userInfo 变量，再跳回之前
+    if (e.detail.userInfo) {
+      app.globalData.userInfo = e.detail.userInfo
+      this.setData({
+        isShowLoading:false
+      })
+    }
+    // 调用云函数
+    wx.cloud.callFunction({
+      name: 'login',
+      data: {},
+      success: res => {
+        console.log('[云函数] [login] user openid: ', res.result.openid)
+        app.globalData.openid = res.result.openid
+      },
+      fail: err => {
+        console.error('[云函数] [login] 调用失败', err)
+      }
+    })
+  },
+  
 })

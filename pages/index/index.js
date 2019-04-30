@@ -21,9 +21,27 @@ Page({
     sliderOffset: 0,
     sliderLeft: 0,
     animals_flag: false,
-    question:""
+    question: ""
   },
   onLoad: function() {
+
+    wx.getStorage({
+      key: 'userInfo',
+      success: function(res) {
+        app.globalData.userInfo = res.data
+      },
+    })
+    wx.cloud.callFunction({
+      name: 'login',
+      data: {},
+      success: res => {
+        console.log('[云函数] [login] user openid: ', res.result.openid)
+        app.globalData.openid = res.result.openid
+      },
+      fail: err => {
+        console.error('[云函数] [login] 调用失败', err)
+      }
+    })
     this.getBanner();
     var that = this;
     wx.getSystemInfo({
@@ -35,6 +53,15 @@ Page({
       }
     });
     this.getQuestion();
+
+    db.collection('sort_question').get({
+      success: res => {
+        app.globalData.accounts = res.data[0].sort_name
+      },
+      fail: err => {
+        conosle.log(err);
+      }
+    })
   },
   //获取banner图
   getBanner() {
@@ -53,21 +80,21 @@ Page({
     })
   },
   getQuestion: function() {
-    
+
     db.collection('question')
       .skip(0)
       .limit(5)
       .get()
       .then(res => {
         this.setData({
-          question:res.data
+          question: res.data
         })
       })
       .catch(err => {
         console.log(err)
       })
   },
- 
+
   //搜索
   showInput: function() {
     this.setData({
@@ -130,5 +157,21 @@ Page({
     wx.navigateTo({
       url: '/pages/question/question',
     })
+  },
+  onPageScroll(e) {
+    let timeout = null;
+    if(timeout != null) clearTimeout();
+    timeout = setTimeout(()=>{
+      console.log(e)
+    },500 );
+  },
+  debounce:function(func) {
+    let timeout;
+    return function(event) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        func.call(this, event)
+      }, 500);
+    };
   }
 });

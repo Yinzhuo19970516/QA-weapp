@@ -16,26 +16,22 @@ Page({
   getUserInfo: function (e) {
     // 将获取的用户信息赋值给全局 userInfo 变量，再跳回之前
     if (e.detail.userInfo) {
-      app.globalData.userInfo = e.detail.userInfo
+      app.globalData.userInfo = e.detail.userInfo;
+      wx.setStorage({
+        key: 'userInfo',
+        data: e.detail.userInfo,
+        success: function () {      
+          console.log('写入userInfo缓存成功')
+        },
+        fail: function () {        
+          console.log('写入userInfo发生错误')
+        }
+      })
       wx.switchTab({
         url: '../index/index',
       })
     }
-      // 调用云函数
-      wx.cloud.callFunction({
-        name: 'login',
-        data: {},
-        success: res => {
-          console.log(res);
-          console.log('[云函数] [login] user openid: ', res.result.openid)
-          app.globalData.openid = res.result.openid
-        },
-        fail: err => {
-          console.error('[云函数] [login] 调用失败', err)
-        }
-      })
   },
-
   /**
    * 生命周期函数--监听页面加载
    */

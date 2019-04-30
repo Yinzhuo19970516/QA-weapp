@@ -6,14 +6,10 @@
   align-items: center;
 }
 .logo{
-  background-position: -30px 0px;
   display: block;
-  height: 190rpx;
-  width: 145rpx;
-  background-image: url(http://p2.qhimg.com/t01d5acf2bde5eb2bb7.png);
-  background-size: auto;
-  background-repeat: none;
-  cursor: pointer;
+  height: 213rpx;
+  width: 193rpx;
+  margin-top:40rpx;
 }
 .introduction{
   margin:30rpx;

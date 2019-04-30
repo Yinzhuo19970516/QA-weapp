@@ -22,29 +22,31 @@
   <view class="btn">
     <button type="primary" open-type="share" bindtap='onShareAppMessage()'>邀请回答</button>
     <button type="primary" bindtap='jumpToIndex'>返回首页</button>
-
   </view>
 
   <view class="myanswer">
     <form bindsubmit="bindFormSubmit">
-      <textarea class="myanswer_input" placeholder="在这里写你的回答" name="textarea"
-      value="{{textarea}}" />
+      <textarea wx:if="{{!isShowLoading}}" class="myanswer_input" placeholder="在这里写你的回答" name="textarea" value="{{textarea}}" />
       <button form-type="submit" class="weui-btn" type="primary">提交</button>
     </form>
   </view>
   <view class="title">全部回答</view>
   <block wx:for="{{answer}}" wx:key="index">
     <view class="answer_box">
-      <view class="content" wx:if="{{!button_flag[index]}}"><wxparser rich-text="{{item.answer_content_simple}}" /></view>
-      <view class="content" wx:if="{{button_flag[index]}}"><wxparser rich-text="{{item.answer_content}}" /></view>
+      <view class="content" wx:if="{{!button_flag[index]}}">
+        <wxparser rich-text="{{item.answer_content_simple}}" />
+      </view>
+      <view class="content" wx:if="{{button_flag[index]}}">
+        <wxparser rich-text="{{item.answer_content}}" />
+      </view>
       <view class="answer_info_box">
         <view class="userinfo">
-          <image wx:if="{{item.answer_avatar}}"class="touxiang" src="{{item.answer_avatar}}"></image>
+          <image wx:if="{{item.answer_avatar}}" class="touxiang" src="{{item.answer_avatar}}"></image>
           <view class="questioner">{{item.answer_nickname}}</view>
         </view>
         <view>
-        <view>采纳率</view>
-        <view>回答时间:{{item.answer_time}}</view>
+          <view>采纳率</view>
+          <view>回答时间:{{item.answer_time}}</view>
         </view>
         <button type="primary" wx:if="{{!button_flag[index]}}" class="view_more" bindtap="view_more" data-bindex="{{index}}">查看全部</button>
         <button type="primary" wx:if="{{button_flag[index]}}" class="view_more" bindtap="view_less" data-bindex="{{index}}">收起</button>
@@ -55,5 +57,13 @@
   <view class="question_little_box" wx:if="{{animals_flag}}"></view>
   <view class="question_box" wx:if="{{animals_flag}}" bindtap='jumpToQusetion'>
     我要提问
+  </view>
+</view>
+<view class="loading-box" hidden="{{!isShowLoading}}">
+  <view class="enter-container">
+    <image src="../../asset/images/logo.png" class="logo"></image>
+    <text class="introduction" style="text-indent:1em">问答是一个公共的问答社区，您可以在这里提出您想问的问题，并设置悬赏积分和悬赏人数，等待回答问题的有缘人，选择最佳答案，馈赠积分；您也可以在这里回答您擅长的问题，瓜分悬赏积分；更可以查询您想知道的问题。</text>
+    <button class="enter-button" type='primary'  open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 开始体验
+    </button>
   </view>
 </view>

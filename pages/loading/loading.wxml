@@ -1,6 +1,6 @@
 <!--pages/loading/loading.wxml-->
 <view class="enter-container">
-  <view class="logo"></view>
+  <image src="../../asset/images/logo.png" class="logo"></image>
   <text class="introduction" style="text-indent:1em">问答是一个公共的问答社区，您可以在这里提出您想问的问题，并设置悬赏积分和悬赏人数，等待回答问题的有缘人，选择最佳答案，馈赠积分；您也可以在这里回答您擅长的问题，瓜分悬赏积分；更可以查询您想知道的问题。</text>
   <button class="enter-button" type='primary' wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 开始体验
   </button>

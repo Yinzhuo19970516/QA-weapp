@@ -44,7 +44,7 @@
   <view class="swiper-container">
     <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{duration}}" current="{{swiperCurrent}}" bindanimationfinish="animationChange" class="swiper">
       <block wx:for="{{banner_list}}" wx:key="index">
-        <navigator url="../detail/detail?question_id={{item.question_id}}">
+        <navigator url="../detail/detail?question_id={{item.question_id}}&question_title={{item.question_title}}">
           <swiper-item>
             <image src="{{item.banner_question_imgUrl}}" class="img" />
             <text class="title">{{item.banner_question_title}}</text>
@@ -62,7 +62,7 @@
           <view class="weui-media-box weui-media-box_text">
             
             <block wx:for="{{question}}" wx:key="{{index}}">
-            <navigator url="../detail/detail?question_id={{item._id}}">
+            <navigator url="../detail/detail?question_id={{item._id}}&question_title={{item.question_title}}">
               <view class="weui-media-box__title weui-media-box__title_in-text">{{item.question_title}}</view>
               <view class="weui-media-box__desc question-content">
                 <view>发布时间：{{item.question_time}}</view>
