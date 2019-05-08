@@ -1,6 +1,7 @@
 const app = getApp()
 var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
 const db = wx.cloud.database()
+var util = require('../../utils/util.js');
 Page({
   data: {
     question_id: '',
@@ -21,10 +22,34 @@ Page({
     sliderOffset: 0,
     sliderLeft: 0,
     animals_flag: false,
-    question: ""
+    question: "",
+    //弹窗参数
+    dialogvisible: false,
+    options: {
+      showclose: true,
+      showfooter: true,
+      closeonclickmodal: true,
+      fullscreen: false
+    },
+    title: '恭喜您获得200积分',
+    opacity: '0.7',
+    content: '您被挑选为幸运用户，特赠送您200积分，积分可以用来发布问题时悬赏积分，也可以花费积分查看问题答案，点击确定去查看我的积分',
   },
   onLoad: function() {
+    // wx.request({
+    //   url: 'http://localhost:5000/ask_question',
+    //   method:'POST',
+    //   header: {
+    //     'content-type': 'application/x-www-form-urlencoded' // 默认值
+    //   },
+    //   data:{
+    //     question: '毓泽奇的招生计划'
+    //   },
+    //   success:(res)=>{
+    //     console.log(res.data)
+    //   }
 
+    // })
     wx.getStorage({
       key: 'userInfo',
       success: function(res) {
@@ -35,8 +60,31 @@ Page({
       name: 'login',
       data: {},
       success: res => {
-        console.log('[云函数] [login] user openid: ', res.result.openid)
         app.globalData.openid = res.result.openid
+        db.collection('person').where({
+            _openid: res.result.openid
+          })
+          .get({
+            success: res => {
+              //console.log(res.data[0])
+              if (res.data[0].is_new) {
+                app.globalData.person = res.data[0];
+                wx.setStorage({
+                  key: 'person',
+                  data: res.data[0],
+                })
+                this.setData({
+                  dialogvisible: true
+                })
+              }else{
+                wx.setStorage({
+                  key: 'person',
+                  data: res.data[0],
+                })
+              }
+
+            }
+          })
       },
       fail: err => {
         console.error('[云函数] [login] 调用失败', err)
@@ -159,19 +207,44 @@ Page({
     })
   },
   onPageScroll(e) {
-    let timeout = null;
-    if(timeout != null) clearTimeout();
-    timeout = setTimeout(()=>{
-      console.log(e)
-    },500 );
+    if (e.scrollTop > 400) {
+      this.setData({
+        animals_flag: !this.data.animals_flag
+      })
+    }
   },
-  debounce:function(func) {
-    let timeout;
-    return function(event) {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        func.call(this, event)
-      }, 500);
-    };
-  }
+  //弹窗
+  handleConfirm() {
+    wx.navigateTo({
+        url: '../message/message'
+      }),
+      this.handleClose();
+  },
+  handleClose() {
+    this.setData({
+      dialogvisible: false
+    })
+  },
+  handleOpen() {
+
+    db.collection('person').doc(app.globalData.person._id).update({
+      data: {
+        is_new: false,
+      },
+      success: res => {
+
+      }
+
+    })
+  },
+  // onHide:function(){
+  //   db.collection('person').doc(app.globalData.person._id).get({
+  //     success:res=>{
+  //       console.log(res)
+  //     }
+  //   })
+  // },
+  // onUnload: function () {
+
+  // }
 });

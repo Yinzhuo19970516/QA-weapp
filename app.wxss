@@ -34,11 +34,11 @@
 }
 .question_little_box{
   position: fixed;
-  top:770rpx;
+  top:780rpx;
   right:90rpx;
   background: rgba(25,185,85,0.75);
   color: white;
-  border-radius: 50%;
+  border-radius: 60rpx;
   width:50rpx;
   height:40rpx;
 }

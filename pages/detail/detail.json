@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "wxparser": "plugin://wxparserPlugin/wxparser"
+    "wxparser": "plugin://wxparserPlugin/wxparser",
+    "dialog": "/components/dialog-wxapp/dialog"
   },
   "navigationBarTitleText": "问题详情",
   "onReachBottomDistance":100

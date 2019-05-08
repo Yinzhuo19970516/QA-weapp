@@ -1,8 +1,11 @@
 // pages/detail/detail.js
 const app = getApp()
 const db = wx.cloud.database()
+var util = require('../../utils/util.js');
 Page({
   data: {
+    _id:null,
+    textarea:'',
     myanswer_flag: true,
     question_id: '',
     question_title:'',
@@ -12,17 +15,51 @@ Page({
     button_name: true,
     id: '',
     button_flag:[],
-    isShowLoading:false
+    isShowLoading:false,
+    dialogvisible: false,
+    options: {
+      showclose: true,
+      showfooter: true,
+      closeonclickmodal: true,
+      fullscreen: false
+    },
+    title: '恭喜您获得200积分',
+    opacity: '0.7',
+    content: '您被挑选为幸运用户，特赠送您200积分，积分可以用来发布问题时悬赏积分，也可以花费积分查看问题答案，点击确定去查看我的积分',
   },
+ 
   bindFormSubmit(e) {
-    this.setData({
-      textarea:""
-    })
     if (e.detail.value.textarea==''){
       wx.showModal({
         content: '请填写完整信息',
         showCancel: false,
         success: function (res) {
+        }
+      });
+    } else if( (e.detail.value.textarea !== '')&&(e.detail.value.textarea!==this.data.textarea)){
+      wx.showModal({
+        content: '您确认要修改',
+        showCancel: true,
+        cancelText:"手滑了",
+        success: res=> {
+          this.setData({
+            textarea:''
+          })
+          db.collection('answer').doc(this.data._id).update({
+            data:{
+              answer_content: e.detail.value.textarea
+            },
+            success: res => {
+              wx.showToast({
+                title: '修改成功',
+              })
+            },
+            fail:err=>{
+              wx.showToast({
+                title: '修改失败，请重试',
+              })
+            }
+          })
         }
       });
     }else {
@@ -40,10 +77,13 @@ Page({
                 answer_content: e.detail.value.textarea,
                 answer_nickname: app.globalData.userInfo.nickName,
                 question_id: this.data.question_id,
-                answer_time: "2019/3/31",
+                answer_time: util.formatTime(new Date()),
                 question_title:this.data.question_title
               },
               success: res => {
+                this.setData({
+                  textarea: ''
+                })
                 wx.showToast({
                   title: '提交成功',
                 })
@@ -91,11 +131,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    this.setData({
-      question_id: options.question_id,
-      question_title:options.question_title
-    })
+    if(options.question_id){
+      this.setData({
+        question_id : options.question_id
+      })
+    }
+    if(options.question_title){
+      this.setData({
+        question_title: options.question_title
+      })
+    }
     this.getQuestion()
+    this.getMyanswer()
     wx.getSetting({
       success: res => {
         if (!res.authSetting['scope.userInfo']) {
@@ -177,7 +224,19 @@ Page({
       }
     })
   },
-
+  getMyanswer(){
+    db.collection("answer").where({
+      _openid:app.globalData.openid,
+      question_id: this.data.question_id
+    }).get({
+      success:res=>{
+        this.setData({
+          _id:res.data[0]._id,
+          textarea:res.data[0].answer_content
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -189,7 +248,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    this.getAnswer()
+    this.getAnswer();
+   
   },
 
   /**
@@ -286,11 +346,34 @@ Page({
       success: res => {
         console.log('[云函数] [login] user openid: ', res.result.openid)
         app.globalData.openid = res.result.openid
+        db.collection('person').where({
+          _openid: res.result.openid
+        })
+          .get({
+            success: res => {
+              if (res.data.length === 0) {
+                db.collection('person').add({
+                  data: {
+                    is_new: true,
+                    jifen_account: 200,
+                    my_jifen: [{ title: "恭喜您获得200积分", content: "您被挑选为幸运用户，特赠送您200积分，积分可以用来发布问题时悬赏积分，也可以花费积分查看问题答案，点击确定去查看我的积分" }]
+                  },
+                  success: res => {
+                    console.log("插入数据成功")
+                  },
+                  fail: err => {
+                    console.log("插入数据失败")
+                  }
+                })
+              }
+            }
+          })
       },
       fail: err => {
         console.error('[云函数] [login] 调用失败', err)
       }
     })
+   
   },
   
 })

@@ -1,15 +1,18 @@
 // pages/question/question.js
 const app = getApp()
 const db = wx.cloud.database()
+const _ = db.command
+var util = require('../../utils/util.js');
 Page({
   data: {
     accountIndex: -1,
-    jifen_account: null,
+    jifen_account: '',
     people_account: '',
     question_content: '',
     accounts: [],
     question: '',
-    sort_name:''
+    sort_name:'',
+    person:null
   },
   bindAccountChange: function(e) {
     this.setData({
@@ -51,7 +54,7 @@ Page({
           // }
         }
       });
-    } else if (jifen_account > 100) {
+    } else if (jifen_account > this.data.person.jifen_account) {
       wx.showModal({
         content: '您没有那么多积分嗷~',
         showCancel: false,
@@ -80,7 +83,7 @@ Page({
           question_integral: jifen_account,
           question_join_account: people_account,
           question_sort: this.data.accounts[this.data.accountIndex],
-          question_time: "2019/4/1",
+          question_time: util.formatTime(new Date()),
           question_title: question_content
         },
         success:res=>{
@@ -118,10 +121,33 @@ Page({
           question_integral: jifen_account,
           question_join_account: people_account,
           question_sort: this.data.accounts[this.data.accountIndex],
-          question_time: "2019/4/1",
+          question_time: util.formatTime(new Date()),
           question_title: question_content
         },
         success: res => {
+          let param = [{
+            title: `支出积分${jifen_account}`, 
+            content: `您发起了一个问题，悬赏积分${jifen_account}`
+          }]
+
+         
+          db.collection('person').doc(this.data.person._id).update({
+            data:{
+              jifen_account: this.data.person.jifen_account - jifen_account,
+              my_jifen: _.push(param)
+            },
+            success:res=>{
+              db.collection('person').doc(this.data.person._id).get({
+                success: res => {
+          
+                  wx.setStorage({
+                    key: 'person',
+                    data: res.data,
+                  })
+                }
+              })
+            }
+          })
           wx.showModal({
             title: '发布成功',
             content: '您的问题已经发布成，现在可以去我的回答页面查看，邀请好友一起瓜分悬赏',
@@ -156,6 +182,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    wx.getStorage({
+      key: 'person',
+      success: res=>  {
+        app.globalData.person = res.data;
+        this.setData({
+          person: res.data
+        })
+      }
+    })
     this.setData({
       accounts: app.globalData.accounts
     });
@@ -190,14 +225,16 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-
+    
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {},
-
+  onShow: function() {
+    
+  },
+  
   /**
    * 生命周期函数--监听页面隐藏
    */
@@ -225,11 +262,12 @@ Page({
   onReachBottom: function() {
 
   },
-
-  /**
-   * 用户点击右上角分享
-   */
   onShareAppMessage: function() {
 
+  },
+  jumpToQuestion() {
+    wx.navigateTo({
+      url: '/pages/question/question'
+    })
   }
 })

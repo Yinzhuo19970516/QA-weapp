@@ -1,5 +1,5 @@
 <view class="page">
-  <view class="page_bd">
+  <!-- <view class="page_bd">
     <image class="icon" src="../../asset/images/message.png"></image>
     <text class="title">我的消息</text>
     <view class="message" wx:if="{{message_list.length===0}}">您暂时没有什么消息</view>
@@ -16,12 +16,15 @@
         <view class="jiantou icon-behind-close"></view>
       </view>
     </view>
-  </view>
+  </view> -->
   <view class="page_bd">
     <image class="icon" src="../../asset/images/jifen.png"></image>
     <text class="title">我的积分</text>
     <block class="jifen-box" wx:for="{{jifen_list_temp}}" wx:key="index">
-      <view class="jifen">{{jifen_list_temp[index]}}</view>
+      <view class="jifen">
+        <view class="jifen-title">{{jifen_list_temp[index].title}}</view>
+        <view class="jifen-content">{{jifen_list_temp[index].content}}</view>
+      </view>
     </block>
     <view class="bottom" hidden="{{jifen_list.length<=2}}">
       <view id="rep_openPrizeList" class="open-list" hidden="{{jifen_list_temp.length>2}}" bindtap="openJifenList">查看全部

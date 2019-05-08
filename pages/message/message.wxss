@@ -22,20 +22,26 @@
   margin:20px auto;
 }
 .jifen-box {
-  display: flex;
-  
+ display: flex;
+ flex-direction: column;
 }
 .jifen {
   width:610rpx;
   display: flex;
+  flex-direction: column;
   margin:50rpx auto 0;
   background: white;
   box-shadow:0rpx 0rpx 15rpx 0rpx rgba(25,185,85,0.75) inset;
   border-radius: 15rpx;
+  font-size:16px;
+  padding:20rpx;
+}
+.jifen-title{
+  font-size: 20px;
 }
 .open-list,.close-list{
   margin:40rpx auto;
-  color:rgb(74,28,1);
+  color:black;
   position:relative;
   text-align:center;
 }

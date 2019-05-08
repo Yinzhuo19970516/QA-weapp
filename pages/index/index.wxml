@@ -1,6 +1,6 @@
 <!--pages/main/main.wxml-->
 <view class="page">
-  <view class="page__bd">
+  <!-- <view class="page__bd">
     <view class="weui-search-bar">
       <view class="weui-search-bar__form">
         <view class="weui-search-bar__box">
@@ -40,7 +40,7 @@
         </view>
       </navigator>
     </view>
-  </view>
+  </view> -->
   <view class="swiper-container">
     <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{duration}}" current="{{swiperCurrent}}" bindanimationfinish="animationChange" class="swiper">
       <block wx:for="{{banner_list}}" wx:key="index">
@@ -65,9 +65,9 @@
             <navigator url="../detail/detail?question_id={{item._id}}&question_title={{item.question_title}}">
               <view class="weui-media-box__title weui-media-box__title_in-text">{{item.question_title}}</view>
               <view class="weui-media-box__desc question-content">
-                <view>发布时间：{{item.question_time}}</view>
-                <view>悬赏积分：{{item.question_integral}}</view>
-                <view>问题分类：{{item.question_sort}}</view>
+                <view>发布时间:{{item.question_time}}</view>
+                <view>悬赏积分:{{item.question_integral}}</view>
+                <view>问题分类:{{item.question_sort}}</view>
               </view>
             </navigator>
             </block>
@@ -82,7 +82,7 @@
       </view>
     </view>
   </view>
-  <view class="page__bd">
+  <!-- <view class="page__bd">
     <image src="../../asset/images/bang.png" class="icon"></image>
     <text class="title">光荣榜</text>
     <view class=" weui-tab">
@@ -100,10 +100,16 @@
         <view class="weui-tab__content" hidden="{{activeIndex != 2}}">正在马不停蹄的开发中</view>
       </view>
     </view>
-  </view>
+  </view> -->
   <view class="animals {{animals_flag?'animals_hover':'animals_normal'}}" bindtap='exchange_animals'></view>
   <view class="question_little_box" wx:if="{{animals_flag}}"></view>
   <view class="question_box" wx:if="{{animals_flag}}" bindtap='jumpToQusetion'>
     我要提问
   </view>
 </view>
+<!--各种弹窗-->
+<dialog visible="{{dialogvisible}}" title="{{title}}" opacity="{{opacity}}" show-close="{{options.showclose}}" show-footer="{{options.showfooter}}" close-on-click-modal="{{options.closeonclickmodal}}" bindclose="handleClose" bindopen="handleOpen" bindconfirm="handleConfirm">
+  <view>
+   {{content}}
+  </view>
+</dialog>

@@ -3,7 +3,7 @@
   width:100%;
   height:auto;
   overflow: auto;
-  padding-top:100rpx;
+  /* padding-top:100rpx; */
 }
 .weui-search-bar{
   width:100%;

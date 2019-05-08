@@ -10,6 +10,11 @@ Page({
     question:""
   },
   onLoad:function(){
+    // wx.getStorageInfo({
+    //   success:function(res){
+    //     console.log(res);
+    //   }
+    // })
     db.collection('sort').get({
       success:res=>{
         this.setData({
